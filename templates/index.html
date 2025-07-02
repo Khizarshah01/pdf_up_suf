@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF N-Up Print Helper</title>
+</head>
+<body>
+    <h1>Upload PDF for N-Up Printing</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="pdf" required><br><br>
+        Pages per A4 side:
+        <select name="pages_per_sheet">
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+        </select><br><br>
+        <button type="submit">Generate</button>
+    </form>
+</body>
+</html>
+
