@@ -52,6 +52,10 @@ def process_pdf(input_path, output_path, n):
     odd_pages = [doc[i] for i in range(total_pages) if (i + 1) % 2 == 1]
     even_pages = [doc[i] for i in range(total_pages) if (i + 1) % 2 == 0]
 
+    # Sort to preserve natural order (critical fix)
+    odd_pages.sort(key=lambda p: p.number)
+    even_pages = swap_neighbors(even_pages)
+
     # Create N-up groups
     odd_groups = make_nup_groups(odd_pages, n)
     even_groups = make_nup_groups(even_pages, n)
@@ -67,6 +71,12 @@ def process_pdf(input_path, output_path, n):
     # Save final file
     final_output.save(output_path, deflate=True)
     doc.close()
+
+def swap_neighbors(pages):
+    swapped = pages[:]
+    for i in range(0, len(swapped) - 1, 2):
+        swapped[i], swapped[i+1] = swapped[i+1], swapped[i]
+    return swapped
 
 def make_nup_groups(pages, n):
     source_path = pages[0].parent.name
